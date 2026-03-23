@@ -1,6 +1,6 @@
 (defpackage :quick-fastq
   (:use :cl :iterate)
-  (:export :toplevel :build))
+  (:export :toplevel))
 
 (in-package :quick-fastq)
 
