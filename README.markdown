@@ -7,8 +7,8 @@ Usage:
 
 ## Syntax
 
-`quick-fastq` will read two Common Lisp forms from stdin (using the standard
-reader for now, so don't run it on untrusted data).  The format of the input is:
+`quick-fastq` will read two Common Lisp forms (using the standard reader for
+now, so don't run it on untrusted data).  The format of the input is:
 
     bindings
     expr
