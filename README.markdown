@@ -3,9 +3,7 @@ Sometimes you just want to make a quick FASTQ file for testing.
 Usage:
 
 1. Write your FASTQ spec in a `foo.lisp` file (see below for the syntax).
-2. `quick-fastq foo.lisp` to dump a random FASTQ on stdout (or `cat foo.lisp | quick-fastq` if you prefer).
-
-You can also pipe the spec into stdin.
+2. `quick-fastq foo.lisp` (or `cat foo.lisp | quick-fastq` if you prefer) to dump a random FASTQ on stdout.
 
 ## Syntax
 
