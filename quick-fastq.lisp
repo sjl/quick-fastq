@@ -1,10 +1,13 @@
 (defpackage :quick-fastq
-  (:use :cl :iterate :losh)
+  (:use :cl :iterate)
   (:export :toplevel :build))
 
 (in-package :quick-fastq)
 
 ;; data is represented as conses of (bases . quality-scores)
+
+(defmacro gimme (n expr)
+  `(loop :repeat ,n :collect ,expr))
 
 (defun phred-char (q)
   (code-char (+ (char-code #\!) q)))
@@ -13,7 +16,7 @@
   (phred-char (+ 18 (random 4))))
 
 (defun random-base ()
-  (random-elt "ACTG"))
+  (aref "ACTG" (random 4)))
 
 (defun random-dna (n)
   (cons (coerce (gimme n (random-base)) 'string)
@@ -58,36 +61,37 @@
         (subseq (cdr dna) (- len n) len)))
 
 (defun mutate (base)
-  (random-elt (ecase base
-                (#\A "TCG")
-                (#\T "ACG")
-                (#\C "ATG")
-                (#\G "ATC"))))
+  (aref (ecase base
+          (#\A "TCG")
+          (#\T "ACG")
+          (#\C "ATG")
+          (#\G "ATC"))
+        (random 3)))
 
 (defun add-snp (freq dna)
   (iterate (with (seq . qs) = (copy dna))
            (for b :in-string seq :with-index i)
-           (when (randomp freq)
+           (when (< (random 1.0) freq)
              (setf (aref seq i) (mutate b)))
-           (returning (cons seq qs))))
+           (finally (return (cons seq qs)))))
 
 (defun add-ins (freq dna)
   (iterate (for b :in-string (car dna))
            (for q :in-string (cdr dna))
            (collect b :into seq)
            (collect q :into qs)
-           (when (randomp freq)
+           (when (< (random 1.0) freq)
              (collect (random-base) :into seq)
              (collect (random-qscore) :into qs))
-           (returning (cons (coerce seq 'string) (coerce qs 'string)))))
+           (finally (return (cons (coerce seq 'string) (coerce qs 'string))))))
 
 (defun add-del (freq dna)
   (iterate (for b :in-string (car dna))
            (for q :in-string (cdr dna))
-           (unless (randomp freq)
+           (unless (< (random 1.0) freq)
              (collect b :into seq)
              (collect q :into qs))
-           (returning (cons (coerce seq 'string) (coerce qs 'string)))))
+           (finally (return (cons (coerce seq 'string) (coerce qs 'string))))))
 
 (defun add-err (freq dna)
   (add-ins freq (add-del freq (add-snp freq dna))))
