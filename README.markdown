@@ -56,16 +56,17 @@ bases in the middle:
     ((x 100))
     #(x 500 x)
 
-Generate a foldback chimeric read, with the second half having a lower quality
-than the first:
+Generate a gapped foldback chimeric read, with the second half having a lower
+quality than the first:
 
-    ((x (q40 1000)))
-    #(x (q20 (revcomp x)))
+    ((x (q40 1000))
+     (f (q20 (revcomp x))))
+    #(x 25 f)
 
 Generate a read with a tandem repeat in the middle:
 
     ()
-    (1000 (rep 200 "ATTT"))
+    (1000 (rep 200 "ATTT") 1000)
 
 Generate a foldback chimeric read with a double tandem duplication in the
 foldback strand, with simulated sequencing error, and small chunks of
@@ -76,6 +77,6 @@ low-quality bases to make the transitions between sections as a hack:
      (a (first 800 x))
      (b (last 200 x))
      (dup (last 150 a))
-     (f #(lq a lq dup lq (rc dup) lq dup lq b)))
+     (f (revcomp #(lq a lq dup lq (rc dup) lq dup lq b))))
 
-    (err 0.01 #(x (revcomp f)))
+    (err 0.01 #(x f))
