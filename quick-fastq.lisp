@@ -4,7 +4,7 @@
 
 (in-package :quick-fastq)
 
-;; data is represented as a conses of (bases . quality-scores)
+;; data is represented as conses of (bases . quality-scores)
 
 (defun phred-char (q)
   (code-char (+ (char-code #\!) q)))
