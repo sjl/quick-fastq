@@ -64,7 +64,7 @@ quality than the first:
 Generate a read with a tandem repeat in the middle:
 
     ()
-    (1000 (rep 200 "ATTT") 1000)
+    #(1000 (rep 200 "ATTT") 1000)
 
 Generate a foldback chimeric read with a double tandem duplication in the
 foldback strand, with simulated sequencing error, and small chunks of
