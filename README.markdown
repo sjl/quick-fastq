@@ -57,12 +57,12 @@ bases in the middle:
     ((x 100))
     #(x 500 x)
 
-Generate a gapped foldback chimeric read, with the second half having a lower
-quality than the first:
+Generate a gapped foldback chimeric read, containing an Alu element, with the
+second half having a lower quality than the first:
 
-    ((x (q40 1000))
+    ((x (q40 #(500 :aluy 500)))
      (f (q20 (revcomp x))))
-    #(x 25 f)
+    #(x 250 f)
 
 Generate a read with a tandem repeat in the middle:
 
