@@ -19,6 +19,9 @@ now, so don't run it on untrusted data).  The format of the input is:
 * An integer like `123` generates that many random bases with random quality scores.
 * A vector like `#(expr1 expr2 …)` evaluates each expression and concatenates the results.
 * A symbol like `x` looks up the value in the bindings (see below).
+* A keyword generates one of the built-in sequences for convenience:
+  * `:aluy` generates an Alu element (you can also use `:alu`).
+  * `:l1hs` generates an L1HS element (you can also use `:l1` or `:line1`).
 * A list performs some operation on the form inside, depending on the symbol at
   the head of the list:
   * `(qN expr)` where `N` is 0-90 evaluates `expr` and sets its quality scores to `N`, e.g. `(q12 500)` will generate 500
